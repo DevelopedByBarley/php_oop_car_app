@@ -1,11 +1,12 @@
 <?php
     class FileUploader{
         public $whiteList = [IMAGETYPE_JPEG, IMAGETYPE_GIF, IMAGETYPE_PNG];
-
     
 
         public function saveFile($file) {
             if (!in_array(exif_imagetype($file["tmp_name"]), $this->whiteList)) return false;
+
+            
 
             $rand = uniqid(rand(), true);
             $ext = pathinfo($file["name"], PATHINFO_EXTENSION);

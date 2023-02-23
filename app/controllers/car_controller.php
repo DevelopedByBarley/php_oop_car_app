@@ -49,6 +49,7 @@ class CarController
 
     public function deleteCar()
     {
+        
         $this->userModel->ifUserNotLoggedInRedirect();
         $carModel = new CarModel($this->pdo);
         $carModel->deleteCar();

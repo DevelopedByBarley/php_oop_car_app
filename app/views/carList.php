@@ -1,13 +1,16 @@
 <div class="container">
     <div class="row">
         <?php foreach ($params["cars"] as $index => $car) : ?>
-            <div class="col-sm-4 car-list border">
+            <div class="col-lg-4 car-list border d-flex align-items-center justify-content-center">
                 <div class="car-card">
                     <div class="card" style="width: 18rem;">
                         <img src="../../public/images/<?= $car["imageName"] ?>" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <h4 class="card-title text-center bg-dark text-light p-3"><?= $car["name"] ?></h4>
+                            <h6 class="card-title">Licence Number:</h6>
+                            <p class="card-text"><?= $car["licenceNumber"] ?></p>
+                            <h6 class="card-title">Price:</h6>
+                            <p class="card-text"><?= $car["price"] ?> Ft</p>
                             <?php if ($params["isUnderEdit"] == $index) : ?>
                                 <form action="/update-car?id=<?= $car["id"] ?>" method="POST">
                                     <input type="text" name="name" />
@@ -31,10 +34,10 @@
 <div class="add_car">
     <h1>Add car</h1>
     <form action="/add-car" method="POST" enctype="multipart/form-data">
-        <input type="text" name="name" placeholder="Name"/>
-        <input type="text" name="licenceNumber" placeholder="Licence Number"/>
-        <input type="number" name="price" placeholder="Price"/>
-        <input type="file" name="file" />
+        <input type="text" name="name" placeholder="Name" required />
+        <input type="text" name="licenceNumber" placeholder="Licence Number" required />
+        <input type="number" name="price" placeholder="Price" required />
+        <input type="file" name="file" required />
         <button class="btn btn-outline-primary">Küld</button>
     </form>
 </div>
