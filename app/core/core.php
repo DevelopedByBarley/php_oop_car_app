@@ -20,10 +20,7 @@ class Router
         if (is_callable($handler)) {
             return $handler();
         }
-        
+
         return $handler;
     }
 }
-
-
-

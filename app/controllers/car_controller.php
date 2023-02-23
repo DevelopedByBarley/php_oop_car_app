@@ -7,17 +7,21 @@ require_once '../app/helpers/render.php';
 class CarController
 {
     public $pdo;
-
-
+    public $userModel;
     public function __construct()
     {
         $database = new Database();
         $pdo = $database->getConnection();
         $this->pdo = $pdo;
+        
+        $userModel = new UserModel($this->pdo); 
+        $this -> userModel = $userModel;
+        
     }
 
     public function getCars()
     {
+        $this->userModel->ifUserNotLoggedInRedirect();
         $carModel = new CarModel($this->pdo);
         $cars = $carModel->getCars();
         $render = new Render();
@@ -31,6 +35,7 @@ class CarController
 
     public function sendCar()
     {
+        $this->userModel->ifUserNotLoggedInRedirect();
         $carModel = new CarModel($this->pdo);
         $carModel->sendCar();
         header('Location: /');
@@ -39,15 +44,18 @@ class CarController
 
     public function deleteCar()
     {
- 
+        $this->userModel->ifUserNotLoggedInRedirect();
         $carModel = new CarModel($this->pdo);
         $carModel->deleteCar();
         header('Location: /');
     }
 
     public function updateCar() {
+        $this->userModel->ifUserNotLoggedInRedirect();
         $carModel = new CarModel($this->pdo);
         $carModel->updateCar();
         header('Location: /');
     }
+
+    
 }
