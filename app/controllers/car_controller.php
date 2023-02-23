@@ -8,15 +8,19 @@ class CarController
 {
     public $pdo;
     public $userModel;
+    public $fileUploader;
+
     public function __construct()
     {
         $database = new Database();
         $pdo = $database->getConnection();
         $this->pdo = $pdo;
-        
-        $userModel = new UserModel($this->pdo); 
-        $this -> userModel = $userModel;
-        
+
+        $userModel = new UserModel($this->pdo);
+        $this->userModel = $userModel;
+
+        $fileUploader = new FileUploader();
+        $this->fileUploader = $fileUploader;
     }
 
     public function getCars()
@@ -36,8 +40,9 @@ class CarController
     public function sendCar()
     {
         $this->userModel->ifUserNotLoggedInRedirect();
+        $file = $this->fileUploader->saveFile($_FILES["file"]);
         $carModel = new CarModel($this->pdo);
-        $carModel->sendCar();
+        $carModel->sendCar($file);
         header('Location: /');
     }
 
@@ -50,12 +55,11 @@ class CarController
         header('Location: /');
     }
 
-    public function updateCar() {
+    public function updateCar()
+    {
         $this->userModel->ifUserNotLoggedInRedirect();
         $carModel = new CarModel($this->pdo);
         $carModel->updateCar();
         header('Location: /');
     }
-
-    
 }

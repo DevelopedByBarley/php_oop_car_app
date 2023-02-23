@@ -1,5 +1,6 @@
 <?php
 
+require '../app/helpers/file_upload.php';
 
 class CarModel
 {
@@ -18,13 +19,14 @@ class CarModel
         return $cars;
     }
 
-    public function sendCar()
+    public function sendCar($file)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO `cars` (`id`, `name`, `licenceNumber`, `price`) VALUES (NULL, ?, ?, ?);");
+        $stmt = $this->pdo->prepare("INSERT INTO `cars` (`id`, `name`, `licenceNumber`, `price`, `imageName`) VALUES (NULL, ?, ?, ?, ?);");
         $stmt->execute([
             $_POST["name"],
             $_POST["licenceNumber"],
-            $_POST["price"]
+            $_POST["price"],
+            $file
         ]);
     }
 
